@@ -1,5 +1,5 @@
 ﻿namespace AOEOBasicDataLibrary.Civs.Constants;
-internal static class CeltUnits
+public static class CeltUnits
 {
     public const string Spearman = "Ce_Inf_Spearman";
     public const string LongSwordsman = "Ce_Inf_LongSwordsman";

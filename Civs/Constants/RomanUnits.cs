@@ -1,5 +1,5 @@
 ﻿namespace AOEOBasicDataLibrary.Civs.Constants;
-internal static class RomanUnits
+public static class RomanUnits
 {
     public const string House = "Ro_Bldg_House";
     public const string Fortress = "Ro_Bldg_Fortress";
