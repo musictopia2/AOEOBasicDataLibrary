@@ -71,4 +71,14 @@ internal static class RomanUnits
             Millarium
         };
     }
+    public static BasicList<string> GetOfficers()
+    {
+        return new()
+        {
+            Aquilifer,
+            Decurion,
+            PrimusPilus,
+            Centurion
+        };
+    }
 }
