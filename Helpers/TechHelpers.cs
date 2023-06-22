@@ -32,6 +32,29 @@ public static class TechHelpers
         XElement firsts = XElement.Load(ll1.GetLocation(path));
         return firsts.Elements("Tech").Single();
     }
+    public static bool OptionalOnlyAllowEffectsAccumulateNoStone(this XElement element)
+    {
+        var firsts = element.Attribute("subtype");
+        if (firsts is null)
+        {
+            return true;
+        }
+        if (firsts.Value == "Cost")
+        {
+            return true; //doing something with stone cost is proper.
+        }
+        var item = element.Attribute("resource");
+        if (item is null)
+        {
+            return true;
+        }
+        if (item.Value == "Stone")
+        {
+            return false;
+        }
+        return true;
+    }
+    public static Func<XElement, bool>? EffectAllowed { get; set; }
     public static IAddTechsToTechTreeService AddAdvisorTechs(this IAddTechsToTechTreeService techs, string path)
     {
         //this is if you are using file storage
@@ -40,31 +63,46 @@ public static class TechHelpers
         {
             throw new CustomBasicException("Must have 4 techs for advisors");
         }
-        int upto = techs.Source!.Elements().Count();
         foreach (XElement tech in list)
         {
-            //tech.SetTechElement();
-            //risk not doing the settechelement if i am wrong, rethink
-            techs.Source.Add(tech);
-            upto++;
+            techs.AddEffects(tech);
         }
         return techs;
+    }
+    private static void AddEffects(this IAddTechsToTechTreeService techs, XElement tech)
+    {
+        tech.SetTechElement();
+        //risk not doing the settechelement if i am wrong, rethink
+
+        BasicList<XElement> effects = tech.Elements("Effects").Single().Elements().ToBasicList();
+        BasicList<XElement> others = effects.ToBasicList();
+        foreach (var effect in effects)
+        {
+            if (EffectAllowed is not null)
+            {
+                bool rets = EffectAllowed(effect);
+                if (rets == false)
+                {
+                    others.RemoveSpecificItem(effect);
+                }
+            }
+        }
+        tech.Elements("Effects").Single().ReplaceAll(others);
+        techs.Source!.Add(tech);
     }
     public static IAddTechsToTechTreeService AddMultipleMiscTechs(this IAddTechsToTechTreeService techs, string path)
     {
         BasicList<XElement> list = path.GetTechElements();
         foreach (var tech in list)
         {
-            tech.SetTechElement();
-            techs.Source!.Add(tech);
+            techs.AddEffects(tech);
         }
         return techs;
     }
     public static IAddTechsToTechTreeService AddSingleTech(this IAddTechsToTechTreeService techs, string path)
     {
         XElement tech = path.GetSingleTechElement();
-        tech.SetTechElement();
-        techs!.Source!.Add(tech);
+        techs.AddEffects(tech);
         return techs;
     }
 }
