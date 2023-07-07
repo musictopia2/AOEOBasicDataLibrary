@@ -1,6 +1,7 @@
 ﻿namespace AOEOBasicDataLibrary.Helpers;
 public static class BasicGameLocationHelpers //i think adding game is important this time.
 {
+    public static string OriginalAOEOPath { get; set; } = ""; //some processes may need it like transferring files.
     public static string NewGamePath { get; set; } = "";
     public static string OldQuestPath(string fileName) => @$"{NewQuestFileDirectory}\{fileName}.quest";
     public static string NewQuestPath => @$"{GameQuestFileDirectory}\current.quest"; //hopefully renaming is fine (?)
