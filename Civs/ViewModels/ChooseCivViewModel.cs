@@ -6,7 +6,7 @@ public class ChooseCivViewModel : IChooseCivViewModel
     {
         _dataService = dataService;
     }
-    public BasicList<CivilizationBasicModel> Civilizations { get; private set; } = new();
+    public BasicList<CivilizationBasicModel> Civilizations { get; set; } = [];
     public CivilizationBasicModel? CivilizationChosen { get; set; }
     public async Task InitAsync()
     {
