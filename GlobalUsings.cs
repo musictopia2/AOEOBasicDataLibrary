@@ -1,9 +1,6 @@
 ﻿global using CommonBasicLibraries.CollectionClasses;
-global using AOEOBasicDataLibrary.Civs.Models;
 global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.BasicExtensions;
-global using AOEOBasicDataLibrary.Civs.DataServices;
 global using dd1 = AOEOBasicDataLibrary.Helpers.BasicGameLocationHelpers;
-global using AOEOBasicDataLibrary.Civs.ViewModels;
 global using System.Xml.Linq;
 global using ff1 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.FileFunctions.FileFunctions;
 global using CommonBasicLibraries.BasicDataSettingsAndProcesses;
@@ -11,7 +8,7 @@ global using ll1 = CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.Fil
 global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.Misc;
 global using System.Diagnostics;
 global using AOEOBasicDataLibrary.Services;
-global using AOEOBasicDataLibrary.TestUtilities;
 global using CommonBasicLibraries.AdvancedGeneralFunctionsAndProcesses.HtmlParserClasses;
 global using ss1 = AOEOBasicDataLibrary.Helpers.FileHelperClass;
 global using AOEOBasicDataLibrary.Helpers;
+

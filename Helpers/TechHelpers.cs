@@ -5,12 +5,12 @@ public static class TechHelpers
     public static string GetTechTitle(this XElement tech)
     {
         string output = tech.Element("DisplayNameID")!.Value;
-        return StringTableHelpers.GetStringValue(int.Parse(output));
+        return QuestStringTableHelpers.GetQuestStringValue(int.Parse(output));
     }
     public static string GetTechDescription(this XElement tech)
     {
         string output = tech.Element("RolloverTextID")!.Value;
-        return StringTableHelpers.GetStringValue(int.Parse(output));
+        return QuestStringTableHelpers.GetQuestStringValue(int.Parse(output));
     }
     public static string GetTechName(this XElement tech)
     {
@@ -104,5 +104,9 @@ public static class TechHelpers
         XElement tech = path.GetSingleTechElement();
         techs.AddEffects(tech);
         return techs;
+    }
+    public static async Task CopyTechsAsync()
+    {
+        await ff1.FileCopyAsync(dd1.RawTechLocation, dd1.NewTechLocation);
     }
 }
