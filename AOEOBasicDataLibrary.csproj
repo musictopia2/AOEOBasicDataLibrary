@@ -3,11 +3,11 @@
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Version>8.0.4</Version>
+    <Version>8.0.6</Version>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CommonBasicLibraries" Version="8.0.1" />
+    <PackageReference Include="CommonBasicLibraries" Version="8.0.31" />
   </ItemGroup>
 </Project>
