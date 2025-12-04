@@ -16,9 +16,12 @@ public static class QuestStringTableHelpers
             throw new CustomBasicException("Must have at least one string");
         }
     }
-    public static string GetQuestStringValue(this int lookup)
+    extension (int lookup)
     {
-        Startup();
-        return _strings.Single(xx => xx.Attribute("_locid")!.Value == lookup.ToString()).Value; //hopefully this simple.
+        public string GetQuestStringValue()
+        {
+            Startup();
+            return _strings.Single(xx => xx.Attribute("_locid")!.Value == lookup.ToString()).Value; //hopefully this simple.
+        }
     }
 }

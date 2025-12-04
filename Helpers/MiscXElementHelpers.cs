@@ -1,36 +1,40 @@
 ﻿namespace AOEOBasicDataLibrary.Helpers;
 public static class MiscXElementHelpers
 {
-    //i think this may still be fine (?)
-    public static BasicList<XElement> GetUnits(this XElement source) => source.Descendants("Unit").ToBasicList();
-    /// <summary>
-    /// this can be used for either tech or unit since they use the same xml
-    /// </summary>
-    /// <param name="list"></param>
-    /// <param name="name"></param>
-    /// <returns></returns>
-    public static XElement GetName(this BasicList<XElement> list, string name, string category) => list.Single(xx => xx.Attribute("name")!.Value == name && (xx.Attribute("category")!.Value == category || xx.Attribute("category")!.Value == "Any"));
-    public static XElement GetName(this BasicList<XElement> list, string name) => list.Single(xx => xx.Attribute("name")!.Value == name);
-    public static string GetName(this XElement element) => element.Attribute("name")!.Value;
-    public static XElement StartNewHiddenTech(this BasicList<XElement> list, string name)
+    extension(XElement source)
     {
-        XElement element = list.GetName(name);
-        element.SetTechElement();
-        return element;
+        public BasicList<XElement> GetUnits() => source.Descendants("Unit").ToBasicList();
+        public void SetTechElement()
+        {
+            source.SetAttributeValue("type", "Normal");
+            source.SetElementValue("DBID", "4728");
+            source.SetElementValue("Status", "UNOBTAINABLE");
+            source.SetElementValue("ContentPack", "22");
+            source.SetElementValue("Flag", "IsAward");
+        }
+        //this is so common, best to have here now.
+        public string AttributeName => source.Attribute("name")!.Value;
     }
-    //this now has to be public since its not always a simple hidden tech anymore.
-    public static void SetTechElement(this XElement element)
+    extension(IEnumerable<XElement> list)
     {
-        element.SetAttributeValue("type", "Normal");
-        element.SetElementValue("DBID", "4728");
-        element.SetElementValue("Status", "UNOBTAINABLE");
-        element.SetElementValue("ContentPack", "22");
-        element.SetElementValue("Flag", "IsAward");
-    }
-    public static XElement StartNewHiddenTech(this BasicList<XElement> list, string name, string category)
-    {
-        XElement element = list.GetName(name, category);
-        element.SetTechElement();
-        return element;
+        /// <summary>
+        /// this can be used for either tech or unit since they use the same xml
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public XElement GetName(string name, string category) => list.Single(xx => xx.Attribute("name")!.Value == name && (xx.Attribute("category")!.Value == category || xx.Attribute("category")!.Value == "Any"));
+        public XElement GetName(string name) => list.Single(xx => xx.Attribute("name")!.Value == name);
+        public XElement StartNewHiddenTech(string name)
+        {
+            XElement element = list.GetName(name);
+            element.SetTechElement();
+            return element;
+        }
+        public XElement StartNewHiddenTech(string name, string category)
+        {
+            XElement element = list.GetName(name, category);
+            element.SetTechElement();
+            return element;
+        }
     }
 }
